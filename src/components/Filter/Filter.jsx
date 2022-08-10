@@ -1,14 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { filterContact } from '../../redux/Contacts/contacts-slice';
+import { useSelector } from 'react-redux';
 
 
-export default function Filter() {
-  const dispatch = useDispatch();
+
+export default function Filter({handlerFilter}) {
   const name = useSelector(state => state.contacts.filter);
-
-  const handlerFilter = e => {
-    dispatch(filterContact(e.target.value));
-  };
 
   return (
     <label>

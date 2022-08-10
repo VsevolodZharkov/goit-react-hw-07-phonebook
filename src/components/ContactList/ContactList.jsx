@@ -1,36 +1,47 @@
 import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/Contacts/contacts-slice';
-
-export default function ContactList() {
-  const contacts = useSelector(state => state.contacts.contacts);
+import { fetchContacts } from 'redux/Contacts/contacts-operations';
+import Filter from '../Filter/Filter';
+import { filterContacts } from 'redux/Contacts/contacts-actions';
+export default function ContactList({ handlerDelete }) {
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
   const filter = useSelector(state => state.contacts.filter);
+  console.log(contacts);
 
-  const getSearchContacts = () => {
-    return contacts.filter( name =>
-      name.name.toLowerCase().includes(filter.toLowerCase())
-    );
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
+
+  const handlerFilter = e => {
+    dispatch(filterContacts(e.target.value));
   };
-  const handlerDelete = id => {
-    dispatch(deleteContact(id));
+
+  const filteredContacts = () => {
+    return contacts.filter(el =>
+      el.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
   return (
-    <ul>
-      {getSearchContacts()?.map(({ id, name, number }) => {
-        return (
-          <li key={id}>
-            <p>
-              {name}: {number}
-            </p>
-            <button type="button" onClick={() => handlerDelete(id)}>
-              Delete
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <Filter handlerFilter={handlerFilter} />
+      <ul>
+        {filteredContacts()?.map(({ id, name, number }) => {
+          return (
+            <li key={id}>
+              <p>
+                {name}: {number}
+              </p>
+              <button type="button" onClick={() => handlerDelete(id)}>
+                Delete
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 }
 

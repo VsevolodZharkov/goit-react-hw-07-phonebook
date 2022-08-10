@@ -1,24 +1,13 @@
 
-import { createReducer } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
-import {
-  fetchContactsRequest,
-  fetchContactsSuccess,
-  fetchContactsError,
-  addContactsRequest,
-  addContactsSuccess,
-  addContactsError,
-  deleteContactsRequest,
-  deleteContactsSuccess,
-  deleteContactsError,
-  filterContacts,
-} from './contacts-actions';
-
+import { filterContacts } from './contacts-actions';
+import { fetchContacts, addContact, deleteContact } from './contacts-operations';
 const items = createReducer([], {
-  [fetchContactsSuccess]: (_, { payload }) => payload,
-  [addContactsRequest]: (state, { payload }) => [...state, payload],
-  [deleteContactsRequest]: (state, { payload }) =>
-    state.filter(({ id }) => id !== payload),
+  [fetchContacts.fulfilled]: (_, { payload }) => payload,
+  [addContact.fulfilled]: (state, { payload }) => [...state, payload],
+  [deleteContact.fulfilled]: (state, { payload }) =>
+  state.filter(({ id }) => id !== payload),
 });
 
 const filter = createReducer('', {
@@ -26,15 +15,15 @@ const filter = createReducer('', {
 });
 
 const loading = createReducer(false, {
-  [fetchContactsRequest]: (state, { payload }) => true,
-  [fetchContactsSuccess]: (state, { payload }) => false,
-  [fetchContactsError]: (state, { payload }) => false,
-  [addContactsRequest]: (state, { payload }) => true,
-  [addContactsSuccess]: (state, { payload }) => false,
-  [addContactsError]: (state, { payload }) => false,
-  [deleteContactsRequest]: (state, { payload }) => true,
-  [deleteContactsSuccess]: (state, { payload }) => false,
-  [deleteContactsError]: (state, { payload }) => false,
+  [fetchContacts.pending]: (state, { payload }) => true,
+  [fetchContacts.fulfilled]: (state, { payload }) => false,
+  [fetchContacts.rejected]: (state, { payload }) => false,
+  [addContact.pending]: (state, { payload }) => true,
+  [addContact.fulfilled]: (state, { payload }) => false,
+  [addContact.rejected]: (state, { payload }) => false,
+  [deleteContact.pending]: (state, { payload }) => true,
+  [deleteContact.fulfilled]: (state, { payload }) => false,
+  [deleteContact.rejected]: (state, { payload }) => false,
 });
 
 export default combineReducers({

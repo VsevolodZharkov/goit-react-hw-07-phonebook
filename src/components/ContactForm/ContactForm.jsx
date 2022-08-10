@@ -1,14 +1,19 @@
-import { addContact } from '../../redux/Contacts/contacts-slice';
+import { addContact } from '../../redux/Contacts/contacts-operations';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
+import ContactList from '../ContactList/ContactList';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { deleteContact, fetchContacts } from 'redux/Contacts/contacts-operations';
+import { useEffect } from 'react';
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-
   const contacts = useSelector(state => state.contacts.contacts);
   const dispatch = useDispatch();
+	
+	useEffect(() => {
+		dispatch(fetchContacts())
+	}, [dispatch]);
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -24,7 +29,11 @@ export const ContactForm = () => {
     }
   };
 
-  const onSubmit = event => {
+	const handlerDelete = id => {
+    dispatch(deleteContact(id));
+  };
+
+	const onSubmit = event => {
     event.preventDefault();
 
     const repeatCont = contacts?.some(
@@ -35,15 +44,15 @@ export const ContactForm = () => {
       return;
     }
 
-    const id = nanoid();
-    const user = { name, number, id };
+    const user = { name, number };
     dispatch(addContact(user));
     setName('');
     setNumber('');
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <>
+		<form onSubmit={onSubmit}>
       <label >
         Name
         <input
@@ -72,5 +81,7 @@ export const ContactForm = () => {
         Add contact
       </button>
     </form>
+		<ContactList handlerDelete={handlerDelete}/>
+		</>
   );
 };
