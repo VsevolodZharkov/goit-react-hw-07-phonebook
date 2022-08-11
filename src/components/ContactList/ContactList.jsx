@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchContacts } from 'redux/Contacts/contacts-operations';
+// import { fetchContacts } from '../../redux/Contacts/contacts-operations';//redux/Contacts/contacts-operations
 import Filter from '../Filter/Filter';
 import { filterContacts } from 'redux/Contacts/contacts-actions';
 export default function ContactList({ handlerDelete }) {
