@@ -38,16 +38,12 @@ export const ContactForm = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-		const user = { name, number };
-		console.log(user);
+    const user = { name, number };
     const repeatCont = contacts?.some(
       elem => elem.name.toLowerCase() === name.toLowerCase()
     );
-		console.log(repeatCont);
-		console.log(contacts);
 
     if (repeatCont) {
-			console.log(1);
       toast(`Invalid data entry`);
       return;
     }
