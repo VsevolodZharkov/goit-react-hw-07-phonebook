@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,16 +38,20 @@ export const ContactForm = () => {
 
   const onSubmit = event => {
     event.preventDefault();
-
+		const user = { name, number };
+		console.log(user);
     const repeatCont = contacts?.some(
       elem => elem.name.toLowerCase() === name.toLowerCase()
     );
-    if (!repeatCont) {
+		console.log(repeatCont);
+		console.log(contacts);
+
+    if (repeatCont) {
+			console.log(1);
       toast(`Invalid data entry`);
       return;
     }
 
-    const user = { name, number };
     dispatch(addContact(user));
     setName('');
     setNumber('');
