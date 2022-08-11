@@ -36,8 +36,6 @@ export const ContactForm = () => {
     dispatch(deleteContact(id));
   };
 
-
-
   const onSubmit = event => {
     event.preventDefault();
 
@@ -48,9 +46,9 @@ export const ContactForm = () => {
       toast(`Invalid data entry`);
       return;
     }
-		
+
     const user = { name, number };
-		dispatch(addContact(user));
+    dispatch(addContact(user));
     setName('');
     setNumber('');
   };

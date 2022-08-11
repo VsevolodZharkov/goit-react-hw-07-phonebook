@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <>
       <Container title="Phone book">
-				<ToastContainer />
+        <ToastContainer />
         <ContactForm />
       </Container>
     </>
