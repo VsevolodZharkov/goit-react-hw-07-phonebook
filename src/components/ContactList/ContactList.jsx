@@ -11,7 +11,7 @@ export default function ContactList({ handlerDelete }) {
   const handlerFilter = e => {
     dispatch(filterContacts(e.target.value));
   };
-
+	
   const filteredContacts = () => {
     return contacts.filter(el =>
       el.name.toLowerCase().includes(filter.toLowerCase())
