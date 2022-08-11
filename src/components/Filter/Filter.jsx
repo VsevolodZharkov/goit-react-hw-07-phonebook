@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux';
 
-
-
 export default function Filter({handlerFilter}) {
   const name = useSelector(state => state.contacts.filter);
 

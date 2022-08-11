@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types';
-// import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { fetchContacts } from '../../redux/Contacts/contacts-operations';//redux/Contacts/contacts-operations
 import Filter from '../Filter/Filter';
 import { filterContacts } from 'redux/Contacts/contacts-actions';
 export default function ContactList({ handlerDelete }) {
@@ -9,10 +7,6 @@ export default function ContactList({ handlerDelete }) {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.contacts.filter);
   console.log(contacts);
-
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
 
   const handlerFilter = e => {
     dispatch(filterContacts(e.target.value));
